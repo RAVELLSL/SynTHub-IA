@@ -27,15 +27,15 @@
         h1 {
             font-size: 3em;
             margin-bottom: 40px;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         /* Estilo das Seções */
         .shelf {
             width: 100%;
             max-width: 1200px;
-            background-color: #ffffff;
+            background-color: #f9f9f9;
             border-radius: 10px;
             margin-bottom: 20px;
             padding: 20px;
@@ -57,7 +57,7 @@
 
         .shelf p {
             font-size: 1.2em;
-            color: #333;
+            color: #666;
         }
 
         /* Conteúdo das Seções */
@@ -123,11 +123,11 @@
 
         .description-box {
             flex: 2 1 400px;
-            background-color: #ffffff;
+            background-color: #f0f0f0;
             border-radius: 10px;
             padding: 20px;
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-            color: #000;
+            color: #000000;
             font-size: 1.1em;
             line-height: 1.5;
             text-align: justify;
@@ -216,7 +216,7 @@
                 <a href="https://soundraw.io/" target="_blank" data-description="Soundraw é uma ferramenta de geração musical por IA que permite criar trilhas sonoras personalizadas para diferentes usos.">Soundraw</a>
                 <a href="https://boomy.com/" target="_blank" data-description="Boomy permite criar músicas originais com o auxílio de IA, prontas para serem distribuídas em plataformas de streaming.">Boomy</a>
                 <a href="https://www.aiva.ai/" target="_blank" data-description="Aiva é uma compositora de música assistida por IA, que pode gerar trilhas sonoras originais para filmes, jogos e outros projetos.">Aiva</a>
-                <a href="https://musicfy.lol/blog/amper-music" target="_blank" data-description="Amper Music é uma plataforma que utiliza IA para compor músicas personalizadas, facilitando o processo criativo.">Amper Music</a>
+                <a href="https://musicfy.lol/blog/amper-music" target="_blank" data-description="Musicfy é uma plataforma que utiliza IA para compor músicas personalizadas, facilitando o processo criativo.">Musicfy</a>
                 <a href="https://suno.com/" target="_blank" data-description="Suno é uma plataforma de IA voltada para a criação e edição de música, ideal para músicos e produtores.">Suno</a>
             </div>
             <div class="details-container">
@@ -235,6 +235,11 @@
         <div id="shelf5" class="shelf-content">
             <div class="links-container">
                 <a href="https://elevenlabs.io/" target="_blank" data-description="Eleven Labs é uma ferramenta de síntese de voz que transforma texto em fala de maneira natural e realista.">Eleven Labs</a>
+                <a href="https://play.ht/" target="_blank" data-description="Play.ht é uma plataforma de conversão de texto em fala que oferece vozes realistas e diversas opções de personalização.">Play.ht</a>
+                <a href="https://murf.ai/" target="_blank" data-description="Murf.AI é uma ferramenta de IA que transforma texto em voz com alta qualidade, ideal para narrações e vídeos.">Murf.AI</a>
+                <a href="https://speechify.com/" target="_blank" data-description="Speechify é um aplicativo que converte texto em fala, oferecendo uma maneira eficiente de consumir conteúdo escrito.">Speechify</a>
+                <a href="https://www.animaker.co/ai-voice-over" target="_blank" data-description="AnimakerVoice é uma plataforma de conversão de texto em fala que permite criar narrações de alta qualidade para vídeos.">AnimakerVoice</a>
+                <a href="https://www.naturalreaders.com/" target="_blank" data-description="NaturalReader é uma ferramenta que converte texto em fala, oferecendo diversas vozes e configurações de leitura.">NaturalReader</a>
             </div>
             <div class="details-container">
                 <div class="logo-box" id="logo-box5"></div>
@@ -332,7 +337,7 @@
                 } else if (this.textContent === 'Scribehow') {
                     logoBox.innerHTML = '<img src="https://pbs.twimg.com/media/FAD2gNFXIAQRll5?format=png&name=4096x4096" alt="Scribehow Logo">';
                 } else if (this.textContent === 'HuggingFace Chat') {
-                    logoBox.innerHTML = '<img src="https://cdn.prod.website-files.com/644238b1cf656a0846763003/64c64b99a5b77cb5962fa41d_HuggingChatIcon.webp" alt="HuggingFace Chat Logo">';
+                    logoBox.innerHTML = '<img src="https://cdn.prod.website-files.com/644238b1cf656a0846763003/64c64b99a5b77cb5962fa41d_HuggingChatIcon.webp" alt="HuggingChat Logo">';
                 } else if (this.textContent === 'ChatGPT') {
                     logoBox.innerHTML = '<img src="https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg" alt="ChatGPT Logo">';
                 } else if (this.textContent === 'Copilot') {
@@ -349,12 +354,22 @@
                     logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2R6DzunzG8spESpgg5MKj3M-PbgmDZUZHxw&s" alt="Boomy Logo">';
                 } else if (this.textContent === 'Aiva') {
                     logoBox.innerHTML = '<img src="https://queromaistecnologia.com/wp-content/uploads/2023/07/Capa_-_AIVA-1024x768.jpg" alt="Aiva Logo">';
-                } else if (this.textContent === 'Amper Music') {
+                } else if (this.textContent === 'Musicfy') {
                     logoBox.innerHTML = '<img src="https://cdn.techjockey.com/web/assets/images/techjockey/products/23591_Musicfy.jpg" alt="Amper Music Logo">';
                 } else if (this.textContent === 'Suno') {
                     logoBox.innerHTML = '<img src="https://logowik.com/content/uploads/images/suno-202423211.logowik.com.webp" alt="Suno Logo">';
                 } else if (this.textContent === 'Eleven Labs') {
                     logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Mn3xItB98CixX2eEKYqyC5wnFIR0POTfbg&s" alt="Eleven Labs Logo">';
+                } else if (this.textContent === 'Play.ht') {
+                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWFJ5A51yhHXnjqzTRi1juRlWejbqXhMeK_dFJ-F4f11XMqxebRNRa0eEzhHSHvtgJkg&usqp=CAU" alt="Play.ht Logo">';
+                } else if (this.textContent === 'Murf.AI') {
+                    logoBox.innerHTML = '<img src="https://www.techopedia.com/wp-content/uploads/2024/04/Murf-AI-Logo.jpeg" alt="Murf.AI Logo">';
+                } else if (this.textContent === 'Speechify') {
+                    logoBox.innerHTML = '<img src="https://entrepreneurship.brown.edu/wp-content/uploads/2022/10/Speechify.png" alt="Speechify Logo">';
+                } else if (this.textContent === 'AnimakerVoice') {
+                    logoBox.innerHTML = '<img src="https://www.saasgenius.com/wp-content/uploads/2022/02/Animaker.jpg" alt="AnimakerVoice Logo">';
+                } else if (this.textContent === 'NaturalReader') {
+                    logoBox.innerHTML = '<img src="https://thriiver.co.uk/wp-content/uploads/Natural-Reader-logo-1.png" alt="NaturalReader Logo">';
                 } else if (this.textContent === 'You.com') {
                     logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjWYVf3L4Jsr1kkzCsQ_7mEIBd6NTFR1ROVw&s" alt="You.com Logo">';
                 } else if (this.textContent === 'DuckDuckGo AI Chat') {
