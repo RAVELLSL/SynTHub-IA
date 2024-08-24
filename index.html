@@ -29,12 +29,20 @@
             margin-bottom: 40px;
             color: #ffffff;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            text-align: center;
         }
 
         /* Estilo das Seções */
-        .shelf {
+        .shelf-container {
             width: 100%;
             max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .shelf {
+            flex: 1 1 calc(50% - 20px);
             background-color: #f9f9f9;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -53,26 +61,67 @@
             color: #007acc;
             margin-bottom: 10px;
             text-shadow: 0 0 5px rgba(0, 122, 204, 0.3);
+            text-align: center; /* Centraliza os títulos */
         }
 
         .shelf p {
             font-size: 1.2em;
             color: #666;
+            text-align: center; /* Centraliza o texto explicativo */
         }
 
-        /* Conteúdo das Seções */
-        .shelf-content {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
+        /* Estilo do Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-content {
             background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            transform-origin: center;
+            transform: scale(0.2);
+            transition: transform 0.5s ease;
+            position: relative;
         }
 
-        .shelf-content.show {
-            display: flex;
-            flex-direction: column;
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            color: #000000;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover {
+            color: #ff0000;
         }
 
         .links-container {
@@ -134,6 +183,9 @@
         }
 
         @media (max-width: 768px) {
+            .shelf {
+                flex: 1 1 100%;
+            }
             .details-container {
                 flex-direction: column;
             }
@@ -143,144 +195,160 @@
 <body>
     <h1>SynTHub</h1>
 
-    <!-- Seção 1 -->
-    <div class="shelf" onclick="toggleShelf('shelf1')">
-        <h2>Geração de Imagens e Vídeos</h2>
-        <p>Ferramentas avançadas para criação e manipulação de imagens e vídeos.</p>
-        <div id="shelf1" class="shelf-content">
-            <div class="links-container">
-                <a href="https://clipdrop.co/" target="_blank" data-description="Clipdrop é uma ferramenta avançada de captura e edição de imagens que permite remover fundos, capturar objetos em 3D e muito mais.">Clipdrop</a>
-                <a href="https://www.heygen.com/" target="_blank" data-description="Heygen é uma plataforma de criação de vídeos gerados por IA, que facilita a produção de vídeos profissionais com avatares animados.">Heygen</a>
-                <a href="https://pika.art/" target="_blank" data-description="Pika é uma ferramenta de IA que ajuda na criação de artes gráficas, permitindo aos usuários gerar imagens personalizadas de alta qualidade.">Pika</a>
-                <a href="https://app.leonardo.ai/" target="_blank" data-description="Leonardo AI é uma plataforma de design assistido por IA que ajuda a criar gráficos, logos e outras artes visuais com facilidade.">Leonardo AI</a>
-                <a href="https://pt.vidnoz.com/" target="_blank" data-description="Vidnoz é uma plataforma de edição de vídeos online que permite criar e editar vídeos de forma rápida e intuitiva, utilizando recursos avançados de IA.">Vidnoz</a>
-                <a href="https://freelogopng.com/images/all_img/1683823510dall-e-logo-png.png" target="_blank" data-description="DALL·E é um modelo de IA desenvolvido pela OpenAI que gera imagens a partir de descrições textuais.">DALL·E</a>
-            </div>
-            <div class="details-container">
-                <div class="logo-box" id="logo-box1"></div>
-                <div class="description-box" id="description-box1">
-                    Passe o mouse sobre uma IA para ver a descrição aqui.
-                </div>
-            </div>
+    <div class="shelf-container">
+        <!-- Seção 1 -->
+        <div class="shelf" onclick="openModal('shelf1Content')">
+            <h2>Geração de Imagens e Vídeos</h2>
+            <p>Ferramentas avançadas para criação e manipulação de imagens e vídeos.</p>
+        </div>
+
+        <!-- Seção 2 -->
+        <div class="shelf" onclick="openModal('shelf2Content')">
+            <h2>Editores de Conteúdo Online</h2>
+            <p>Plataformas versáteis para criação e edição de conteúdo visual e audiovisual.</p>
+        </div>
+
+        <!-- Seção 3 -->
+        <div class="shelf" onclick="openModal('shelf3Content')">
+            <h2>Geração de Conteúdo Textual</h2>
+            <p>Poderosas ferramentas para criação e edição de textos eficientes.</p>
+        </div>
+
+        <!-- Seção 4 -->
+        <div class="shelf" onclick="openModal('shelf4Content')">
+            <h2>Criação e Edição de Música</h2>
+            <p>Ferramentas inovadoras para compor e editar música.</p>
+        </div>
+
+        <!-- Seção 5 -->
+        <div class="shelf" onclick="openModal('shelf5Content')">
+            <h2>Síntese de Voz e Conversão de Texto em Fala</h2>
+            <p>Tecnologia de ponta para transformar texto em voz com qualidade profissional.</p>
+        </div>
+
+        <!-- Seção 6 -->
+        <div class="shelf" onclick="openModal('shelf6Content')">
+            <h2>Pesquisa e Navegação com IA</h2>
+            <p>Ferramentas que utilizam IA para aprimorar a experiência de pesquisa e navegação.</p>
+        </div>
+
+        <!-- Seção 7 -->
+        <div class="shelf" onclick="openModal('shelf7Content')">
+            <h2>Plataformas e Assistentes de IA Avançada</h2>
+            <p>Plataformas poderosas para uma ampla gama de aplicações de IA.</p>
         </div>
     </div>
 
-    <!-- Seção 2 -->
-    <div class="shelf" onclick="toggleShelf('shelf2')">
-        <h2>Editores de Conteúdo Online</h2>
-        <p>Plataformas versáteis para criação e edição de conteúdo visual e audiovisual.</p>
-        <div id="shelf2" class="shelf-content">
-            <div class="links-container">
-                <a href="https://www.canva.com/" target="_blank" data-description="Canva é uma ferramenta de design gráfico online que permite criar apresentações, posters, imagens para redes sociais e muito mais.">Canva</a>
-                <a href="https://picsart.com/pt/" target="_blank" data-description="Picsart é uma plataforma de edição de fotos e vídeos que oferece uma ampla gama de ferramentas criativas para personalizar e transformar suas imagens.">Picsart</a>
-                <a href="https://app.clipchamp.com/" target="_blank" data-description="Clipchamp é uma ferramenta online de edição de vídeos que oferece funcionalidades poderosas para criar e editar vídeos com facilidade.">Clipchamp</a>
-            </div>
-            <div class="details-container">
-                <div class="logo-box" id="logo-box2"></div>
-                <div class="description-box" id="description-box2">
-                    Passe o mouse sobre uma IA para ver a descrição aqui.
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modalContent">
+            <button class="close-button" onclick="closeModal()">×</button>
+            <div id="shelf1Content" class="modal-details" style="display: none;">
+                <h2>Geração de Imagens e Vídeos</h2>
+                <div class="links-container">
+                    <a href="https://clipdrop.co/" target="_blank" data-description="Clipdrop é uma ferramenta avançada de captura e edição de imagens que permite remover fundos, capturar objetos em 3D e muito mais.">Clipdrop</a>
+                    <a href="https://www.heygen.com/" target="_blank" data-description="Heygen é uma plataforma de criação de vídeos gerados por IA, que facilita a produção de vídeos profissionais com avatares animados.">Heygen</a>
+                    <a href="https://pika.art/" target="_blank" data-description="Pika é uma ferramenta de IA que ajuda na criação de artes gráficas, permitindo aos usuários gerar imagens personalizadas de alta qualidade.">Pika</a>
+                    <a href="https://app.leonardo.ai/" target="_blank" data-description="Leonardo AI é uma plataforma de design assistido por IA que ajuda a criar gráficos, logos e outras artes visuais com facilidade.">Leonardo AI</a>
+                    <a href="https://pt.vidnoz.com/" target="_blank" data-description="Vidnoz é uma plataforma de edição de vídeos online que permite criar e editar vídeos de forma rápida e intuitiva, utilizando recursos avançados de IA.">Vidnoz</a>
+                    <a href="https://freelogopng.com/images/all_img/1683823510dall-e-logo-png.png" target="_blank" data-description="DALL·E é um modelo de IA desenvolvido pela OpenAI que gera imagens a partir de descrições textuais.">DALL·E</a>
+                </div>
+                <div class="details-container">
+                    <div class="logo-box" id="logo-box1"></div>
+                    <div class="description-box" id="description-box1">
+                        Passe o mouse sobre uma IA para ver a descrição aqui.
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Seção 3 -->
-    <div class="shelf" onclick="toggleShelf('shelf3')">
-        <h2>Geração de Conteúdo Textual</h2>
-        <p>Poderosas ferramentas para criação e edição de textos eficientes.</p>
-        <div id="shelf3" class="shelf-content">
-            <div class="links-container">
-                <a href="https://scribehow.com/" target="_blank" data-description="Scribehow ajuda a criar guias passo a passo e documentação visual de forma rápida e eficiente.">Scribehow</a>
-                <a href="https://huggingface.co/chat/" target="_blank" data-description="HuggingFace Chat é uma ferramenta que oferece interações em linguagem natural utilizando modelos de IA avançados.">HuggingFace Chat</a>
-                <a href="https://chatgpt.com/" target="_blank" data-description="ChatGPT é um modelo de linguagem avançado que permite interações e criações de conteúdo em linguagem natural.">ChatGPT</a>
-                <a href="https://copilot.microsoft.com/" target="_blank" data-description="Copilot é um assistente de IA integrado em aplicativos do Microsoft 365 que ajuda na criação e edição de documentos.">Copilot</a>
-                <a href="https://gemini.google.com/app" target="_blank" data-description="Gemini é um assistente de IA que integra múltiplos recursos de busca e criação de conteúdo no ecossistema Google.">Gemini</a>
-                <a href="https://claude.ai/new" target="_blank" data-description="Claude AI é uma plataforma de IA avançada que oferece assistentes virtuais para uma variedade de aplicações.">Claude AI</a>
-            </div>
-            <div class="details-container">
-                <div class="logo-box" id="logo-box3"></div>
-                <div class="description-box" id="description-box3">
-                    Passe o mouse sobre uma IA para ver a descrição aqui.
+            <div id="shelf2Content" class="modal-details" style="display: none;">
+                <h2>Editores de Conteúdo Online</h2>
+                <div class="links-container">
+                    <a href="https://www.canva.com/" target="_blank" data-description="Canva é uma ferramenta de design gráfico online que permite criar apresentações, posters, imagens para redes sociais e muito mais.">Canva</a>
+                    <a href="https://picsart.com/pt/" target="_blank" data-description="Picsart é uma plataforma de edição de fotos e vídeos que oferece uma ampla gama de ferramentas criativas para personalizar e transformar suas imagens.">Picsart</a>
+                    <a href="https://app.clipchamp.com/" target="_blank" data-description="Clipchamp é uma ferramenta online de edição de vídeos que oferece funcionalidades poderosas para criar e editar vídeos com facilidade.">Clipchamp</a>
+                </div>
+                <div class="details-container">
+                    <div class="logo-box" id="logo-box2"></div>
+                    <div class="description-box" id="description-box2">
+                        Passe o mouse sobre uma IA para ver a descrição aqui.
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Seção 4 -->
-    <div class="shelf" onclick="toggleShelf('shelf4')">
-        <h2>Criação e Edição de Música</h2>
-        <p>Ferramentas inovadoras para compor e editar música.</p>
-        <div id="shelf4" class="shelf-content">
-            <div class="links-container">
-                <a href="https://mubert.com/" target="_blank" data-description="Mubert é uma plataforma de criação musical baseada em IA que permite gerar música personalizada em tempo real.">Mubert</a>
-                <a href="https://soundraw.io/" target="_blank" data-description="Soundraw é uma ferramenta de geração musical por IA que permite criar trilhas sonoras personalizadas para diferentes usos.">Soundraw</a>
-                <a href="https://boomy.com/" target="_blank" data-description="Boomy permite criar músicas originais com o auxílio de IA, prontas para serem distribuídas em plataformas de streaming.">Boomy</a>
-                <a href="https://www.aiva.ai/" target="_blank" data-description="Aiva é uma compositora de música assistida por IA, que pode gerar trilhas sonoras originais para filmes, jogos e outros projetos.">Aiva</a>
-                <a href="https://musicfy.lol/blog/amper-music" target="_blank" data-description="Musicfy é uma plataforma que utiliza IA para compor músicas personalizadas, facilitando o processo criativo.">Musicfy</a>
-                <a href="https://suno.com/" target="_blank" data-description="Suno é uma plataforma de IA voltada para a criação e edição de música, ideal para músicos e produtores.">Suno</a>
-            </div>
-            <div class="details-container">
-                <div class="logo-box" id="logo-box4"></div>
-                <div class="description-box" id="description-box4">
-                    Passe o mouse sobre uma IA para ver a descrição aqui.
+            <div id="shelf3Content" class="modal-details" style="display: none;">
+                <h2>Geração de Conteúdo Textual</h2>
+                <div class="links-container">
+                    <a href="https://scribehow.com/" target="_blank" data-description="Scribehow ajuda a criar guias passo a passo e documentação visual de forma rápida e eficiente.">Scribehow</a>
+                    <a href="https://huggingface.co/chat/" target="_blank" data-description="HuggingFace Chat é uma ferramenta que oferece interações em linguagem natural utilizando modelos de IA avançados.">HuggingFace Chat</a>
+                    <a href="https://chatgpt.com/" target="_blank" data-description="ChatGPT é um modelo de linguagem avançado que permite interações e criações de conteúdo em linguagem natural.">ChatGPT</a>
+                    <a href="https://copilot.microsoft.com/" target="_blank" data-description="Copilot é um assistente de IA integrado em aplicativos do Microsoft 365 que ajuda na criação e edição de documentos.">Copilot</a>
+                    <a href="https://gemini.google.com/app" target="_blank" data-description="Gemini é um assistente de IA que integra múltiplos recursos de busca e criação de conteúdo no ecossistema Google.">Gemini</a>
+                    <a href="https://claude.ai/new" target="_blank" data-description="Claude AI é uma plataforma de IA avançada que oferece assistentes virtuais para uma variedade de aplicações.">Claude AI</a>
+                </div>
+                <div class="details-container">
+                    <div class="logo-box" id="logo-box3"></div>
+                    <div class="description-box" id="description-box3">
+                        Passe o mouse sobre uma IA para ver a descrição aqui.
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Seção 5 -->
-    <div class="shelf" onclick="toggleShelf('shelf5')">
-        <h2>Síntese de Voz e Conversão de Texto em Fala</h2>
-        <p>Tecnologia de ponta para transformar texto em voz com qualidade profissional.</p>
-        <div id="shelf5" class="shelf-content">
-            <div class="links-container">
-                <a href="https://elevenlabs.io/" target="_blank" data-description="Eleven Labs é uma ferramenta de síntese de voz que transforma texto em fala de maneira natural e realista.">Eleven Labs</a>
-                <a href="https://play.ht/" target="_blank" data-description="Play.ht é uma plataforma de conversão de texto em fala que oferece vozes realistas e diversas opções de personalização.">Play.ht</a>
-                <a href="https://murf.ai/" target="_blank" data-description="Murf.AI é uma ferramenta de IA que transforma texto em voz com alta qualidade, ideal para narrações e vídeos.">Murf.AI</a>
-                <a href="https://speechify.com/" target="_blank" data-description="Speechify é um aplicativo que converte texto em fala, oferecendo uma maneira eficiente de consumir conteúdo escrito.">Speechify</a>
-                <a href="https://www.animaker.co/ai-voice-over" target="_blank" data-description="AnimakerVoice é uma plataforma de conversão de texto em fala que permite criar narrações de alta qualidade para vídeos.">AnimakerVoice</a>
-                <a href="https://www.naturalreaders.com/" target="_blank" data-description="NaturalReader é uma ferramenta que converte texto em fala, oferecendo diversas vozes e configurações de leitura.">NaturalReader</a>
-            </div>
-            <div class="details-container">
-                <div class="logo-box" id="logo-box5"></div>
-                <div class="description-box" id="description-box5">
-                    Passe o mouse sobre uma IA para ver a descrição aqui.
+            <div id="shelf4Content" class="modal-details" style="display: none;">
+                <h2>Criação e Edição de Música</h2>
+                <div class="links-container">
+                    <a href="https://mubert.com/" target="_blank" data-description="Mubert é uma plataforma de criação musical baseada em IA que permite gerar música personalizada em tempo real.">Mubert</a>
+                    <a href="https://soundraw.io/" target="_blank" data-description="Soundraw é uma ferramenta de geração musical por IA que permite criar trilhas sonoras personalizadas para diferentes usos.">Soundraw</a>
+                    <a href="https://boomy.com/" target="_blank" data-description="Boomy permite criar músicas originais com o auxílio de IA, prontas para serem distribuídas em plataformas de streaming.">Boomy</a>
+                    <a href="https://www.aiva.ai/" target="_blank" data-description="Aiva é uma compositora de música assistida por IA, que pode gerar trilhas sonoras originais para filmes, jogos e outros projetos.">Aiva</a>
+                    <a href="https://musicfy.lol/blog/amper-music" target="_blank" data-description="Musicfy é uma plataforma que utiliza IA para compor músicas personalizadas, facilitando o processo criativo.">Musicfy</a>
+                    <a href="https://suno.com/" target="_blank" data-description="Suno é uma plataforma de IA voltada para a criação e edição de música, ideal para músicos e produtores.">Suno</a>
+                </div>
+                <div class="details-container">
+                    <div class="logo-box" id="logo-box4"></div>
+                    <div class="description-box" id="description-box4">
+                        Passe o mouse sobre uma IA para ver a descrição aqui.
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Seção 6 -->
-    <div class="shelf" onclick="toggleShelf('shelf6')">
-        <h2>Pesquisa e Navegação com IA</h2>
-        <p>Ferramentas que utilizam IA para aprimorar a experiência de pesquisa e navegação.</p>
-        <div id="shelf6" class="shelf-content">
-            <div class="links-container">
-                <a href="https://you.com/" target="_blank" data-description="You.com é um mecanismo de busca que integra IA para fornecer resultados de pesquisa personalizados e precisos.">You.com</a>
-                <a href="https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1" target="_blank" data-description="DuckDuckGo AI Chat é uma extensão do mecanismo de busca DuckDuckGo que permite interações em linguagem natural com IA.">DuckDuckGo AI Chat</a>
-            </div>
-            <div class="details-container">
-                <div class="logo-box" id="logo-box6"></div>
-                <div class="description-box" id="description-box6">
-                    Passe o mouse sobre uma IA para ver a descrição aqui.
+            <div id="shelf5Content" class="modal-details" style="display: none;">
+                <h2>Síntese de Voz e Conversão de Texto em Fala</h2>
+                <div class="links-container">
+                    <a href="https://elevenlabs.io/" target="_blank" data-description="Eleven Labs é uma ferramenta de síntese de voz que transforma texto em fala de maneira natural e realista.">Eleven Labs</a>
+                    <a href="https://play.ht/" target="_blank" data-description="Play.ht é uma plataforma de conversão de texto em fala que oferece vozes realistas e diversas opções de personalização.">Play.ht</a>
+                    <a href="https://murf.ai/" target="_blank" data-description="Murf.AI é uma ferramenta de IA que transforma texto em voz com alta qualidade, ideal para narrações e vídeos.">Murf.AI</a>
+                    <a href="https://speechify.com/" target="_blank" data-description="Speechify é um aplicativo que converte texto em fala, oferecendo uma maneira eficiente de consumir conteúdo escrito.">Speechify</a>
+                    <a href="https://www.animaker.co/ai-voice-over" target="_blank" data-description="AnimakerVoice é uma plataforma de conversão de texto em fala que permite criar narrações de alta qualidade para vídeos.">AnimakerVoice</a>
+                    <a href="https://www.naturalreaders.com/" target="_blank" data-description="NaturalReader é uma ferramenta que converte texto em fala, oferecendo diversas vozes e configurações de leitura.">NaturalReader</a>
+                </div>
+                <div class="details-container">
+                    <div class="logo-box" id="logo-box5"></div>
+                    <div class="description-box" id="description-box5">
+                        Passe o mouse sobre uma IA para ver a descrição aqui.
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Seção 7 -->
-    <div class="shelf" onclick="toggleShelf('shelf7')">
-        <h2>Plataformas e Assistentes de IA Avançada</h2>
-        <p>Plataformas poderosas para uma ampla gama de aplicações de IA.</p>
-        <div id="shelf7" class="shelf-content">
-            <div class="links-container">
-                <a href="https://www.kickresume.com/en/" target="_blank" data-description="Kickresume ajuda a criar currículos e cartas de apresentação profissionais utilizando IA e modelos prontos.">Kickresume</a>
-                <a href="https://chat.freedomgpt.com/pt" target="_blank" data-description="Freedom GPT é uma plataforma de IA que oferece um assistente de linguagem natural com foco em privacidade e liberdade de expressão.">Freedom GPT</a>
+            <div id="shelf6Content" class="modal-details" style="display: none;">
+                <h2>Pesquisa e Navegação com IA</h2>
+                <div class="links-container">
+                    <a href="https://you.com/" target="_blank" data-description="You.com é um mecanismo de busca que integra IA para fornecer resultados de pesquisa personalizados e precisos.">You.com</a>
+                    <a href="https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1" target="_blank" data-description="DuckDuckGo AI Chat é uma extensão do mecanismo de busca DuckDuckGo que permite interações em linguagem natural com IA.">DuckDuckGo AI Chat</a>
+                </div>
+                <div class="details-container">
+                    <div class="logo-box" id="logo-box6"></div>
+                    <div class="description-box" id="description-box6">
+                        Passe o mouse sobre uma IA para ver a descrição aqui.
+                    </div>
+                </div>
             </div>
-            <div class="details-container">
-                <div class="logo-box" id="logo-box7"></div>
-                <div class="description-box" id="description-box7">
-                    Passe o mouse sobre uma IA para ver a descrição aqui.
+            <div id="shelf7Content" class="modal-details" style="display: none;">
+                <h2>Plataformas e Assistentes de IA Avançada</h2>
+                <div class="links-container">
+                    <a href="https://www.kickresume.com/en/" target="_blank" data-description="Kickresume ajuda a criar currículos e cartas de apresentação profissionais utilizando IA e modelos prontos.">Kickresume</a>
+                    <a href="https://chat.freedomgpt.com/pt" target="_blank" data-description="Freedom GPT é uma plataforma de IA que oferece um assistente de linguagem natural com foco em privacidade e liberdade de expressão.">Freedom GPT</a>
+                </div>
+                <div class="details-container">
+                    <div class="logo-box" id="logo-box7"></div>
+                    <div class="description-box" id="description-box7">
+                        Passe o mouse sobre uma IA para ver a descrição aqui.
+                    </div>
                 </div>
             </div>
         </div>
@@ -288,108 +356,112 @@
 
     <!-- JavaScript -->
     <script>
-        // Função para alternar a visibilidade do conteúdo da seção
-        function toggleShelf(shelfId) {
-            const shelfContent = document.getElementById(shelfId);
-            const allShelves = document.querySelectorAll('.shelf-content');
-            
-            // Fechar outras seções abertas
-            allShelves.forEach(shelf => {
-                if (shelf.id !== shelfId) {
-                    shelf.classList.remove('show');
-                }
+        function openModal(contentId) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            const shelf = document.querySelector(`[onclick="openModal('${contentId}')"]`);
+
+            const rect = shelf.getBoundingClientRect();
+            modalContent.style.transformOrigin = `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
+
+            const allContents = document.querySelectorAll('.modal-details');
+            allContents.forEach(content => {
+                content.style.display = 'none';
             });
-            
-            // Alternar a seção clicada
-            shelfContent.classList.toggle('show');
+
+            const contentToShow = document.getElementById(contentId);
+            contentToShow.style.display = 'block';
+
+            modal.classList.add('show');
+
+            // Adiciona o evento de mouseover para mostrar as logos no modal
+            const links = contentToShow.querySelectorAll('.links-container a');
+            links.forEach(link => {
+                link.addEventListener('mouseover', function() {
+                    const description = this.getAttribute('data-description');
+                    const descriptionBox = contentToShow.querySelector('.description-box');
+                    descriptionBox.textContent = description;
+
+                    const logoBox = contentToShow.querySelector('.logo-box');
+                    if (this.textContent === 'Clipdrop') {
+                        logoBox.innerHTML = '<img src="https://storage.googleapis.com/gossips/product/bulk/clipdrop/logo.jpg" alt="Clipdrop Logo">';
+                    } else if (this.textContent === 'Heygen') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJYsTqrjPC2zH2zM9RHeu1DYFrxK0o74IYMw&s" alt="Heygen Logo">';
+                    } else if (this.textContent === 'Pika') {
+                        logoBox.innerHTML = '<img src="https://media.licdn.com/dms/image/D5612AQHLflEmM2w3Sg/article-cover_image-shrink_720_1280/0/1701204919099?e=2147483647&v=beta&t=R5f-EFNq9IdpmW50lRl9bHlT2mj6lS0i7MstmGqUNjs" alt="Pika Logo">';
+                    } else if (this.textContent === 'Leonardo AI') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhQcncLs0eCUmfQljMhYuqd3I5y6yVIxEPsw&s" alt="Leonardo AI Logo">';
+                    } else if (this.textContent === 'Vidnoz') {
+                        logoBox.innerHTML = '<img src="https://img.utdstc.com/icon/310/ff6/310ff67393d71eb0fa8033ebdda263e5c42b3bf267270bbb9f836ccf86a16c77:200" alt="Vidnoz Logo">';
+                    } else if (this.textContent === 'DALL·E') {
+                        logoBox.innerHTML = '<img src="https://freelogopng.com/images/all_img/1683823510dall-e-logo-png.png" alt="DALL·E Logo">';
+                    } else if (this.textContent === 'Canva') {
+                        logoBox.innerHTML = '<img src="https://gsuimages.com/classes/RdEKpXJGM.png?w=1200&v=1670504320000" alt="Canva Logo">';
+                    } else if (this.textContent === 'Picsart') {
+                        logoBox.innerHTML = '<img src="https://petapixel.com/assets/uploads/2021/08/Picsart-Raises-130M-in-Latest-Funding-Round-Eyes-Massive-Expansion-1.jpg" alt="Picsart Logo">';
+                    } else if (this.textContent === 'Clipchamp') {
+                        logoBox.innerHTML = '<img src="https://store-images.s-microsoft.com/image/apps.34636.14506576373691712.11874306-e088-48be-b68f-ae349077a503.e9290f9d-a10d-4bf3-9fcf-949ce4896aa9" alt="Clipchamp Logo">';
+                    } else if (this.textContent === 'Scribehow') {
+                        logoBox.innerHTML = '<img src="https://pbs.twimg.com/media/FAD2gNFXIAQRll5?format=png&name=4096x4096" alt="Scribehow Logo">';
+                    } else if (this.textContent === 'HuggingFace Chat') {
+                        logoBox.innerHTML = '<img src="https://cdn.prod.website-files.com/644238b1cf656a0846763003/64c64b99a5b77cb5962fa41d_HuggingChatIcon.webp" alt="HuggingChat Logo">';
+                    } else if (this.textContent === 'ChatGPT') {
+                        logoBox.innerHTML = '<img src="https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg" alt="ChatGPT Logo">';
+                    } else if (this.textContent === 'Copilot') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCddncjtRrM6PTEI5kalwhq9W_Nez7boz_Yg&s" alt="Copilot Logo">';
+                    } else if (this.textContent === 'Gemini') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThr7qrIazsvZwJuw-uZCtLzIjaAyVW_ZrlEQ&s" alt="Gemini Logo">';
+                    } else if (this.textContent === 'Claude AI') {
+                        logoBox.innerHTML = '<img src="https://staticimg.amarujala.com/assets/images/2024/05/03/claude-ai_f7de2f4677865e50d5ba6dae17c888a0.jpeg?w=414" alt="Claude AI Logo">';
+                    } else if (this.textContent === 'Mubert') {
+                        logoBox.innerHTML = '<img src="https://static.tildacdn.com/stor3162-6365-4132-b737-363235373862/57308021.svg" alt="Mubert Logo">';
+                    } else if (this.textContent === 'Soundraw') {
+                        logoBox.innerHTML = '<img src="https://10web.io/wp-content/uploads/2024/07/SOUNDRAW.png" alt="Soundraw Logo">';
+                    } else if (this.textContent === 'Boomy') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2R6DzunzG8spESpgg5MKj3M-PbgmDZUZHxw&s" alt="Boomy Logo">';
+                    } else if (this.textContent === 'Aiva') {
+                        logoBox.innerHTML = '<img src="https://queromaistecnologia.com/wp-content/uploads/2023/07/Capa_-_AIVA-1024x768.jpg" alt="Aiva Logo">';
+                    } else if (this.textContent === 'Musicfy') {
+                        logoBox.innerHTML = '<img src="https://cdn.techjockey.com/web/assets/images/techjockey/products/23591_Musicfy.jpg" alt="Amper Music Logo">';
+                    } else if (this.textContent === 'Suno') {
+                        logoBox.innerHTML = '<img src="https://logowik.com/content/uploads/images/suno-202423211.logowik.com.webp" alt="Suno Logo">';
+                    } else if (this.textContent === 'Eleven Labs') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Mn3xItB98CixX2eEKYqyC5wnFIR0POTfbg&s" alt="Eleven Labs Logo">';
+                    } else if (this.textContent === 'Play.ht') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWFJ5A51yhHXnjqzTRi1juRlWejbqXhMeK_dFJ-F4f11XMqxebRNRa0eEzhHSHvtgJkg&usqp=CAU" alt="Play.ht Logo">';
+                    } else if (this.textContent === 'Murf.AI') {
+                        logoBox.innerHTML = '<img src="https://www.techopedia.com/wp-content/uploads/2024/04/Murf-AI-Logo.jpeg" alt="Murf.AI Logo">';
+                    } else if (this.textContent === 'Speechify') {
+                        logoBox.innerHTML = '<img src="https://entrepreneurship.brown.edu/wp-content/uploads/2022/10/Speechify.png" alt="Speechify Logo">';
+                    } else if (this.textContent === 'AnimakerVoice') {
+                        logoBox.innerHTML = '<img src="https://www.saasgenius.com/wp-content/uploads/2022/02/Animaker.jpg" alt="AnimakerVoice Logo">';
+                    } else if (this.textContent === 'NaturalReader') {
+                        logoBox.innerHTML = '<img src="https://thriiver.co.uk/wp-content/uploads/Natural-Reader-logo-1.png" alt="NaturalReader Logo">';
+                    } else if (this.textContent === 'You.com') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjWYVf3L4Jsr1kkzCsQ_7mEIBd6NTFR1ROVw&s" alt="You.com Logo">';
+                    } else if (this.textContent === 'DuckDuckGo AI Chat') {
+                        logoBox.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/pt/thumb/2/24/Duck_Duck_Go.svg/640px-Duck_Duck_Go.svg.png" alt="DuckDuckGo Logo">';
+                    } else if (this.textContent === 'Kickresume') {
+                        logoBox.innerHTML = '<img src="https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/eof0pdoge2nykd2tszjh" alt="Kickresume Logo">';
+                    } else if (this.textContent === 'Freedom GPT') {
+                        logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1s1cW0pScpVyTCzTOVoo8rpavD-3fYkaRKQ&s" alt="Freedom GPT Logo">';
+                    } else {
+                        logoBox.innerHTML = '';
+                    }
+                });
+
+                // Restaurar imagem padrão ao remover o mouse
+                link.addEventListener('mouseout', function() {
+                    const logoBox = contentToShow.querySelector('.logo-box');
+                    logoBox.innerHTML = '';
+                });
+            });
         }
 
-        // Função para atualizar a descrição ao passar o mouse sobre o link
-        const links = document.querySelectorAll('.links-container a');
-
-        links.forEach(link => {
-            link.addEventListener('mouseover', function() {
-                const description = this.getAttribute('data-description');
-                const shelfContent = this.closest('.shelf-content');
-                const descriptionBox = shelfContent.querySelector('.description-box');
-                descriptionBox.textContent = description;
-
-                // Atualizar logotipo com a logo correta
-                const logoBox = shelfContent.querySelector('.logo-box');
-                if (this.textContent === 'Clipdrop') {
-                    logoBox.innerHTML = '<img src="https://storage.googleapis.com/gossips/product/bulk/clipdrop/logo.jpg" alt="Clipdrop Logo">';
-                } else if (this.textContent === 'Heygen') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJYsTqrjPC2zH2zM9RHeu1DYFrxK0o74IYMw&s" alt="Heygen Logo">';
-                } else if (this.textContent === 'Pika') {
-                    logoBox.innerHTML = '<img src="https://media.licdn.com/dms/image/D5612AQHLflEmM2w3Sg/article-cover_image-shrink_720_1280/0/1701204919099?e=2147483647&v=beta&t=R5f-EFNq9IdpmW50lRl9bHlT2mj6lS0i7MstmGqUNjs" alt="Pika Logo">';
-                } else if (this.textContent === 'Leonardo AI') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhQcncLs0eCUmfQljMhYuqd3I5y6yVIxEPsw&s" alt="Leonardo AI Logo">';
-                } else if (this.textContent === 'Vidnoz') {
-                    logoBox.innerHTML = '<img src="https://img.utdstc.com/icon/310/ff6/310ff67393d71eb0fa8033ebdda263e5c42b3bf267270bbb9f836ccf86a16c77:200" alt="Vidnoz Logo">';
-                } else if (this.textContent === 'DALL·E') {
-                    logoBox.innerHTML = '<img src="https://freelogopng.com/images/all_img/1683823510dall-e-logo-png.png" alt="DALL·E Logo">';
-                } else if (this.textContent === 'Canva') {
-                    logoBox.innerHTML = '<img src="https://gsuimages.com/classes/RdEKpXJGM.png?w=1200&v=1670504320000" alt="Canva Logo">';
-                } else if (this.textContent === 'Picsart') {
-                    logoBox.innerHTML = '<img src="https://petapixel.com/assets/uploads/2021/08/Picsart-Raises-130M-in-Latest-Funding-Round-Eyes-Massive-Expansion-1.jpg" alt="Picsart Logo">';
-                } else if (this.textContent === 'Clipchamp') {
-                    logoBox.innerHTML = '<img src="https://store-images.s-microsoft.com/image/apps.34636.14506576373691712.11874306-e088-48be-b68f-ae349077a503.e9290f9d-a10d-4bf3-9fcf-949ce4896aa9" alt="Clipchamp Logo">';
-                } else if (this.textContent === 'Scribehow') {
-                    logoBox.innerHTML = '<img src="https://pbs.twimg.com/media/FAD2gNFXIAQRll5?format=png&name=4096x4096" alt="Scribehow Logo">';
-                } else if (this.textContent === 'HuggingFace Chat') {
-                    logoBox.innerHTML = '<img src="https://cdn.prod.website-files.com/644238b1cf656a0846763003/64c64b99a5b77cb5962fa41d_HuggingChatIcon.webp" alt="HuggingChat Logo">';
-                } else if (this.textContent === 'ChatGPT') {
-                    logoBox.innerHTML = '<img src="https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg" alt="ChatGPT Logo">';
-                } else if (this.textContent === 'Copilot') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCddncjtRrM6PTEI5kalwhq9W_Nez7boz_Yg&s" alt="Copilot Logo">';
-                } else if (this.textContent === 'Gemini') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThr7qrIazsvZwJuw-uZCtLzIjaAyVW_ZrlEQ&s" alt="Gemini Logo">';
-                } else if (this.textContent === 'Claude AI') {
-                    logoBox.innerHTML = '<img src="https://staticimg.amarujala.com/assets/images/2024/05/03/claude-ai_f7de2f4677865e50d5ba6dae17c888a0.jpeg?w=414" alt="Claude AI Logo">';
-                } else if (this.textContent === 'Mubert') {
-                    logoBox.innerHTML = '<img src="https://static.tildacdn.com/stor3162-6365-4132-b737-363235373862/57308021.svg" alt="Mubert Logo">';
-                } else if (this.textContent === 'Soundraw') {
-                    logoBox.innerHTML = '<img src="https://10web.io/wp-content/uploads/2024/07/SOUNDRAW.png" alt="Soundraw Logo">';
-                } else if (this.textContent === 'Boomy') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2R6DzunzG8spESpgg5MKj3M-PbgmDZUZHxw&s" alt="Boomy Logo">';
-                } else if (this.textContent === 'Aiva') {
-                    logoBox.innerHTML = '<img src="https://queromaistecnologia.com/wp-content/uploads/2023/07/Capa_-_AIVA-1024x768.jpg" alt="Aiva Logo">';
-                } else if (this.textContent === 'Musicfy') {
-                    logoBox.innerHTML = '<img src="https://cdn.techjockey.com/web/assets/images/techjockey/products/23591_Musicfy.jpg" alt="Amper Music Logo">';
-                } else if (this.textContent === 'Suno') {
-                    logoBox.innerHTML = '<img src="https://logowik.com/content/uploads/images/suno-202423211.logowik.com.webp" alt="Suno Logo">';
-                } else if (this.textContent === 'Eleven Labs') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Mn3xItB98CixX2eEKYqyC5wnFIR0POTfbg&s" alt="Eleven Labs Logo">';
-                } else if (this.textContent === 'Play.ht') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWFJ5A51yhHXnjqzTRi1juRlWejbqXhMeK_dFJ-F4f11XMqxebRNRa0eEzhHSHvtgJkg&usqp=CAU" alt="Play.ht Logo">';
-                } else if (this.textContent === 'Murf.AI') {
-                    logoBox.innerHTML = '<img src="https://www.techopedia.com/wp-content/uploads/2024/04/Murf-AI-Logo.jpeg" alt="Murf.AI Logo">';
-                } else if (this.textContent === 'Speechify') {
-                    logoBox.innerHTML = '<img src="https://entrepreneurship.brown.edu/wp-content/uploads/2022/10/Speechify.png" alt="Speechify Logo">';
-                } else if (this.textContent === 'AnimakerVoice') {
-                    logoBox.innerHTML = '<img src="https://www.saasgenius.com/wp-content/uploads/2022/02/Animaker.jpg" alt="AnimakerVoice Logo">';
-                } else if (this.textContent === 'NaturalReader') {
-                    logoBox.innerHTML = '<img src="https://thriiver.co.uk/wp-content/uploads/Natural-Reader-logo-1.png" alt="NaturalReader Logo">';
-                } else if (this.textContent === 'You.com') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjWYVf3L4Jsr1kkzCsQ_7mEIBd6NTFR1ROVw&s" alt="You.com Logo">';
-                } else if (this.textContent === 'DuckDuckGo AI Chat') {
-                    logoBox.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/pt/thumb/2/24/Duck_Duck_Go.svg/640px-Duck_Duck_Go.svg.png" alt="DuckDuckGo Logo">';
-                } else if (this.textContent === 'Kickresume') {
-                    logoBox.innerHTML = '<img src="https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/eof0pdoge2nykd2tszjh" alt="Kickresume Logo">';
-                } else if (this.textContent === 'Freedom GPT') {
-                    logoBox.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1s1cW0pScpVyTCzTOVoo8rpavD-3fYkaRKQ&s" alt="Freedom GPT Logo">';
-                } else {
-                    logoBox.innerHTML = '';
-                }
-            });
-
-            // Restaurar imagem padrão ao remover o mouse
-            link.addEventListener('mouseout', function() {
-                const shelfContent = this.closest('.shelf-content');
-                const logoBox = shelfContent.querySelector('.logo-box');
-                logoBox.innerHTML = '';
-            });
-        });
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('show');
+        }
     </script>
 </body>
 </html>
